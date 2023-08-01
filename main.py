@@ -1,3 +1,4 @@
+import time
 import requests
 import selectorlib
 import smtplib, ssl
@@ -48,12 +49,14 @@ def read(extracted):
 
 
 if __name__ == "__main__":
-    scraped = scrape(URL)
-    extracted = extract(scraped)
-    print(extracted)
+    while True:
+        scraped = scrape(URL)
+        extracted = extract(scraped)
+        print(extracted)
 
-    content = read(extracted)
-    if extracted != "No upcoming tours":
-        if extracted not in content:
-            store(extracted)
-            send_mail(message="Hey! there is new music event coming soon.")
+        content = read(extracted)
+        if extracted != "No upcoming tours":
+            if extracted not in content:
+                store(extracted)
+                send_mail(message="Hey! there is new music event coming soon.")
+        time.sleep(2)
