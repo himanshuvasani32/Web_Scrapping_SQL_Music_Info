@@ -1,5 +1,7 @@
 import requests
 import selectorlib
+import smtplib, ssl
+import os
 
 URL = "http://programmer100.pythonanywhere.com/tours/"
 HEADERS = {
@@ -20,7 +22,16 @@ def extract(source):
     return value
 
 
-def send_mail():
+def send_mail(message):
+    host = "smtp.gmail.com"
+    port = 465
+    sender = "himanshuvasani33@gmail.com"
+    password = os.getenv("PASSWORD")
+    receiver = "innovistainfotech@gmail.com"
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL(host, port, context=context) as server:
+        server.login(sender, password)
+        server.sendmail(sender, receiver, message)
     print("Email was sent!")
 
 
@@ -45,4 +56,4 @@ if __name__ == "__main__":
     if extracted != "No upcoming tours":
         if extracted not in content:
             store(extracted)
-            send_mail()
+            send_mail(message="Hey! there is new music event coming soon.")
