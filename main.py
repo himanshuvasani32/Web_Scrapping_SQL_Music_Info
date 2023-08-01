@@ -7,11 +7,20 @@ HEADERS = {
 
 
 def scrape(url):
-    """This function will extract the information from the given URL."""
+    """This function will extract the source from the given URL."""
     response = requests.get(url, headers=HEADERS)
     source = response.text
     return source
 
 
+def extract(source):
+    """This function will extract the value we want to extract from the source."""
+    extractor = selectorlib.Extractor.from_yaml_file("extract.yaml")
+    value = extractor.extract(source)["tours"]
+    return value
+
+
 if __name__ == "__main__":
-    print(scrape(URL))
+    scraped = scrape(URL)
+    extracted = extract(scraped)
+    print(extracted)
