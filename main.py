@@ -28,6 +28,7 @@ def extract(source):
 
 
 def send_mail(message):
+    """This function will send an email when there will be a new event."""
     host = "smtp.gmail.com"
     port = 465
     sender = "himanshuvasani33@gmail.com"
